@@ -21,12 +21,22 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
-local lang_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-for _, ls in ipairs(lang_servers) do
+local lang_servers = function()
+	local servers = {}
+	local configs = require("lspconfig.configs")
+
+	for server, config in pairs(configs) do
+		if config.manager ~= nil then
+			table.insert(servers, server)
+		end
+	end
+	return servers
+end
+for _, ls in ipairs(lang_servers()) do
 	local config = {
 		capabilities = capabilities,
 		on_attach = on_attach,
-		root_dir = require("lspconfig").util.root_pattern(".git")
+		root_dir = require("lspconfig").util.root_pattern(".git"),
 	}
 	if ls == "clangd" then
 		config.cmd = {
@@ -56,3 +66,20 @@ vim.api.nvim_create_autocmd({ "LspAttach", "InsertEnter", "InsertLeave" }, {
 		vim.lsp.inlay_hint.enable(enabled, { bufnr = args.buf })
 	end,
 })
+
+-- Autocmd for async cache to register buffer for VectorCode
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   callback = function()
+-- 		local cacher = require("vectorcode.cacher")
+--     local bufnr = vim.api.nvim_get_current_buf()
+--     cacher.async_check("config", function()
+--       cacher.register_buffer(
+--         bufnr,
+--         { notify = false, n_query = 10 },
+--         require("vectorcode.utils").lsp_document_symbol_cb(),
+--         { "BufWritePost" }
+--       )
+--     end, nil)
+--   end,
+--   desc = "Register buffer for VectorCode",
+-- })

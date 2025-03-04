@@ -1,82 +1,115 @@
-local preprompt =
-	"Think step by step. Consider my prompt carefully and think of the academic or professional expertise of someone that could best answer my question. You have the experience of someone with expert knowledge in that area. Be helpful and answer in detail while preferring to use information from reputable sources. "
-local prompts = {
-  -- Code related prompts
-  Explain = preprompt .. "Please explain how the following code works.",
-  Review = preprompt .. "Please review the following code and provide suggestions for improvement.",
-  Tests = preprompt .. "Please explain how the selected code works, then generate unit tests for it.",
-  Refactor = preprompt .. "Please refactor the following code to improve its clarity and readability.",
-  FixCode = preprompt .. "Please fix the following code to make it work as intended.",
-  FixError = preprompt .. "Please explain the error in the following text and provide a solution.",
-  BetterNamings = preprompt .. "Please provide better names for the following variables and functions.",
-  Documentation = preprompt .. "Please provide documentation for the following code.",
-  SwaggerApiDocs = preprompt .. "Please provide documentation for the following API using Swagger.",
-  SwaggerJsDocs = preprompt .. "Please write JSDoc for the following API using Swagger.",
-  -- Text related prompts
-  Summarize = "Please summarize the following text.",
-  Spelling = "Please correct any grammar and spelling errors in the following text.",
-  Wording = "Please improve the grammar and wording of the following text.",
-  Concise = "Please rewrite the following text to make it more concise.",
-}
-
 return {
+	-- {
+	-- 	"David-Kunz/gen.nvim",
+	-- 	opts = {
+	-- 		model = "deepseek-r1:8b",
+	-- 		quit_map = "q",
+	-- 		retry_map = "<c-r>",
+	-- 		accept_map = "<c-cr>",
+	-- 		host = "ollama",
+	-- 		port = "11434",
+	-- 		display_mode = "float",
+	-- 		show_prompt = true,
+	-- 		show_model = true,
+	-- 		no_auto_close = false,
+	-- 		file = false,
+	-- 		hidden = false,
+	-- 		init = function(options)
+	-- 			pcall(io.popen, "ollama serve > /dev/null 2>&1 &")
+	-- 		end,
+	-- 		command = function(options)
+	-- 			local body = { model = options.model, stream = true }
+	-- 			return "curl --silent --no-buffer -X POST http://"
+	-- 				.. options.host
+	-- 				.. ":"
+	-- 				.. options.port
+	-- 				.. "/api/chat -d $body"
+	-- 		end,
+	-- 		result_filetype = "markdown",
+	-- 		debug = false,
+	-- 	},
+	-- },
+	-- {
+	-- 	"milanglacier/minuet-ai.nvim",
+	-- 	config = function()
+	-- 		-- local vectorcode_cacher = require("vectorcode.cacher")
+	-- 		require("minuet").setup({
+	-- 			notify = "debug",
+	-- 			virtualtext = {
+	-- 				auto_trigger_ft = {},
+	-- 				keymap = {
+	-- 					accept = "<C-e>",
+	-- 					accept_line = "<C-q>",
+	-- 					accept_n_lines = "<A-z>",
+	-- 					prev = "<A-[>",
+	-- 					next = "<C-c>",
+	-- 					dismiss = "<A-e>",
+	-- 				},
+	-- 			},
+	-- 			provider = "openai_fim_compatible",
+	-- 			add_single_line_entry = true,
+	-- 			n_completions = 1,
+	-- 			context_window = 512,
+	-- 			throttle = 400,
+	-- 			debounce = 100,
+	-- 			after_cursor_filter_length = 30,
+	-- 			provider_options = {
+	-- 				openai_fim_compatible = {
+	-- 					api_key = "TERM",
+	-- 					name = "Ollama",
+	-- 					stream = true,
+	-- 					end_point = "http://ollama:11434/v1/completions",
+	-- 					model = "qwen2.5-coder:latest",
+	-- 					optional = {
+	-- 						max_tokens = 256,
+	-- 						top_p = 0.9,
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+	-- codeium
+	--  {
+	--    "Exafunction/codeium.nvim",
+	--    cmd = "Codeium",
+	--    event = "InsertEnter",
+	--    build = ":Codeium Auth",
+	--    opts = {
+	--  	enable_cmp_source = false,
+	--      virtual_text = {
+	--        enabled = true,
+	--  		idle_delay = 50,
+	--        key_bindings = {
+	--          accept = "<C-c>",
+	--          next = "<M-]>",
+	--          prev = "<M-[>",
+	--        },
+	--      },
+	--    },
+	--  },
+	-- copilot
 	{
-		"CopilotC-Nvim/CopilotChat.nvim",
+		"zbirenbaum/copilot.lua",
+		-- enabled = false,
+		cmd = "Copilot",
+		build = ":Copilot auth",
+		event = "BufEnter",
 		opts = {
-			prompts = prompts,
-			mappings = {
-				reset = {
-					normal = "C-x",
-					insert = "C-x",
+			suggestion = {
+				enabled = true,
+				auto_trigger = true,
+				keymap = {
+					accept = "<C-c>",
+					next = "<M-e>",
+					prev = "<M-q>",
 				},
 			},
+			panel = { enabled = false },
+			filetypes = {
+				markdown = true,
+				help = true,
+			},
 		},
-		config = function (_, opts)
-			require('CopilotChat').setup(opts)
-		end,
 	},
-
-  -- copilot
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "InsertEnter",
-    opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = "<C-c>",
-          next = "<M-e>",
-          prev = "<M-q>",
-        },
-      },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
-    },
-  },
-
-  -- lualine
-  {
-    "nvim-lualine/lualine.nvim",
-    optional = true,
-    event = "VeryLazy",
-    opts = function(_, opts)
-      table.insert(
-        opts.sections.lualine_x,
-        2,
-        LazyVim.lualine.status(LazyVim.config.icons.kinds.Copilot, function()
-          local clients = package.loaded["copilot"] and LazyVim.lsp.get_clients({ name = "copilot", bufnr = 0 }) or {}
-          if #clients > 0 then
-            local status = require("copilot.api").status.data.status
-            return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
-          end
-        end)
-      )
-    end,
-  },
 }

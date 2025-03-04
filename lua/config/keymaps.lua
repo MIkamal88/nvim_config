@@ -11,8 +11,6 @@ keymap("n", "*", "*zz", opts)
 keymap("n", "#", "#zz", opts)
 keymap("n", "g*", "g*zz", opts)
 keymap("n", "g#", "g#zz", opts)
--- keymap("n", "<C-d>", "<C-d>zz", opts)
--- keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("x", "p", [["_dP]])
 keymap("n", "q:", ":q<cr>")
 
@@ -30,11 +28,11 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- Tmux Navigation
-keymap("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", opts)
-keymap("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", opts)
-keymap("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", opts)
-keymap("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", opts)
-keymap("n", "<C-\\>", "<Cmd>NvimTmuxNavigateLastActive<CR>", opts)
+-- keymap("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", opts)
+-- keymap("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", opts)
+-- keymap("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", opts)
+-- keymap("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", opts)
+-- keymap("n", "<C-\\>", "<Cmd>NvimTmuxNavigateLastActive<CR>", opts)
 
 keymap("n", "<leader>C", ":Cheatsheet<CR>")
 
@@ -45,6 +43,16 @@ keymap("n", "<leader>C", ":Cheatsheet<CR>")
 -- keymap("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide Output" })
 -- keymap("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "Molten Enter Output" })
 
--- keymap("i", "<C-c>", function(fallback)
--- 	return LazyVim.cmp.map({ "snippet_forward", "ai_accept" }, fallback)()
--- end, opts)
+keymap({ "n", "v" }, "<leader>A", "<Cmd>Gen<CR>", { desc = "Use Local Ollama Model" })
+keymap({ "n", "v" }, "<leader>L", "<Cmd>LivePreview start<CR>", { desc = "Start LivePreview" })
+
+keymap("n", "<leader>uH", function()
+	local attached = require("colorizer").is_buffer_attached()
+	if not attached then
+		require("colorizer").attach_to_buffer(0)
+		vim.notify("Enabled **Colorizer Highlights**", vim.log.levels.INFO, { title = "Tabs" })
+	else
+		require("colorizer").detach_from_buffer(0)
+		vim.notify("Disabled **Colorizer Highlights**", vim.log.levels.WARN, { title = "Tabs" })
+	end
+end, { desc = "Toggle Colorizer" })
