@@ -43,8 +43,9 @@ keymap("n", "<leader>C", ":Cheatsheet<CR>")
 -- keymap("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide Output" })
 -- keymap("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "Molten Enter Output" })
 
-keymap({ "n", "v" }, "<leader>A", "<Cmd>Gen<CR>", { desc = "Use Local Ollama Model" })
-keymap({ "n", "v" }, "<leader>L", "<Cmd>LivePreview start<CR>", { desc = "Start LivePreview" })
+-- keymap({ "n", "v" }, "<leader>A", "<Cmd>Gen<CR>", { desc = "Use Local Ollama Model" })
+keymap({ "n", "v" }, "<leader>L", "<Cmd>LiveServerStart<CR>", { desc = "Start LiveServer" })
+keymap({ "n", "v" }, "<leader>S", "<Cmd>LiveServerStop<CR>", { desc = "Stop LiveServer" })
 
 keymap("n", "<leader>uH", function()
 	local attached = require("colorizer").is_buffer_attached()

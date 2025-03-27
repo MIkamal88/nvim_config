@@ -44,7 +44,7 @@ return {
 					},
 					lualine_c = { { "filename", path = 1, symbols = confui.file_status_symbol }, { "searchcount" } }, -- relative path
 					lualine_x = {
-						{ "diagnostics", sources = { "get_diagnostics_in_current_root_dir" } },
+						{ "copilot", "diagnostics", sources = { "get_diagnostics_in_current_root_dir" } },
 						confui.encoding,
 						confui.fileformat,
 						"filetype",
@@ -66,30 +66,30 @@ return {
 						},
 					},
 				},
-				winbar = {
-					lualine_a = {
-						{ "filetype", icon_only = true },
-						{ "filename", path = 0, symbols = confui.file_status_symbol },
-					},
-					lualine_c = { " " },
-					lualine_x = {
-						function()
-							return " "
-						end,
-						{ "diagnostics", sources = { "nvim_diagnostic" } },
-						"diff",
-					},
-				},
-				inactive_winbar = {
-					lualine_a = {
-						{ "filetype", icon_only = true },
-						{ "filename", path = 0, symbols = confui.file_status_symbol },
-					},
-					lualine_x = {
-						{ "diagnostics", sources = { "nvim_diagnostic" } },
-						"diff",
-					},
-				},
+				-- winbar = {
+				-- 	lualine_a = {
+				-- 		{ "filetype", icon_only = true },
+				-- 		{ "filename", path = 0, symbols = confui.file_status_symbol },
+				-- 	},
+				-- 	lualine_c = { " " },
+				-- 	lualine_x = {
+				-- 		function()
+				-- 			return " "
+				-- 		end,
+				-- 		{ "diagnostics", sources = { "nvim_diagnostic" } },
+				-- 		"diff",
+				-- 	},
+				-- },
+				-- inactive_winbar = {
+				-- 	lualine_a = {
+				-- 		{ "filetype", icon_only = true },
+				-- 		{ "filename", path = 0, symbols = confui.file_status_symbol },
+				-- 	},
+				-- 	lualine_x = {
+				-- 		{ "diagnostics", sources = { "nvim_diagnostic" } },
+				-- 		"diff",
+				-- 	},
+				-- },
 				extensions = { "aerial", "nvim-tree", "quickfix", "toggleterm" },
 			})
 		end,

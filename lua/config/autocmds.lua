@@ -21,30 +21,19 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
-local lang_servers = function()
-	local servers = {}
-	local configs = require("lspconfig.configs")
-
-	for server, config in pairs(configs) do
-		if config.manager ~= nil then
-			table.insert(servers, server)
-		end
-	end
-	return servers
-end
-for _, ls in ipairs(lang_servers()) do
+for _, ls in pairs(vim.lsp.get_clients{}) do
 	local config = {
 		capabilities = capabilities,
 		on_attach = on_attach,
 		root_dir = require("lspconfig").util.root_pattern(".git"),
 	}
-	if ls == "clangd" then
+	if ls.name == "clangd" then
 		config.cmd = {
 			"clangd",
 			"--offset-encoding=utf-16",
 		}
 	end
-	if ls == "pyright" then
+	if ls.name == "pyright" then
 		config.settings = {
 			python = {
 				analysis = {
@@ -55,6 +44,10 @@ for _, ls in ipairs(lang_servers()) do
 				},
 			},
 		}
+	end
+	if ls.name == "tailwindcss" then
+		ls.server_capabilities.completionProvider.triggerCharacters =
+			{ '"', "'", "`", ".", "(", "[", "!", "/", ":" }
 	end
 	require("lspconfig")[ls].setup(config)
 end
