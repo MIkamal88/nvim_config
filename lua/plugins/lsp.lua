@@ -114,6 +114,34 @@ return {
 						},
 					},
 				},
+				clangd = {
+					cmd = {
+						"clangd",
+						"--offset-encoding=utf-16",
+						"--background-index",
+						"--clang-tidy",
+						"--completion-style=detailed",
+						"--header-insertion=iwyu",
+						"--pch-storage=memory",
+					},
+					single_file_support = true,
+					root_dir = function(...)
+						return require("lspconfig.util").root_pattern(".git")(...)
+					end,
+				},
+				pyright = {
+					single_file_support = true,
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "basic",
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "workspace",
+							},
+						},
+					},
+				},
 			},
 			setup = {},
 		},

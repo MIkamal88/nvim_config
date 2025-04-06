@@ -4,13 +4,10 @@ return {
 		event = "VeryLazy",
 		config = function()
 			local lualine = require("lualine")
-
 			local diagnostics_sources = require("lualine.components.diagnostics.sources").sources
-
 			local confui = require("config.microchad.ui")
 
 			diagnostics_sources.get_diagnostics_in_current_root_dir = confui.get_diagnostics_in_current_root_dir
-
 			lualine.setup({
 				options = {
 					icons_enabled = true,

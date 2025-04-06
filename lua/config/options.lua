@@ -11,8 +11,8 @@ opt.whichwrap:append("<>[]hl")
 -- Tabs not spaces
 opt.expandtab = false
 
--- Allow Nvim to access system clipboard
-opt.clipboard = "unnamedplus"
+-- -- Allow Nvim to access system clipboard
+-- opt.clipboard = "unnamedplus"
 
 -- Mostly for cmp?
 opt.completeopt = { "menu" }
@@ -36,5 +36,14 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 -- More space in Command Line for displaying messages.
 opt.cmdheight = 1
 
--- -- Disable autoformat
+-- Disable autoformat
 vim.g.autoformat = false
+
+-- Folding
+-- vim.o.foldenable = true
+-- vim.o.foldlevel = 99
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.o.foldtext = ""
+-- vim.opt.foldcolumn = "0"
+-- vim.opt.fillchars:append({fold = " "})

@@ -1,21 +1,53 @@
 return {
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	build = ":Copilot auth",
+	-- 	event = "BufEnter",
+	-- 	opts = {
+	-- 		suggestion = {
+	-- 			enabled = true,
+	-- 			auto_trigger = true,
+	-- 			keymap = {
+	-- 				accept = "<C-c>",
+	-- 				next = "<M-e>",
+	-- 				prev = "<M-q>",
+	-- 			},
+	-- 		},
+	-- 		panel = { enabled = false },
+	-- 	},
+	-- },
+	-- { "AndreM222/copilot-lualine" },
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		build = ":Copilot auth",
+		"yetone/avante.nvim",
 		event = "BufEnter",
+		version = false,
 		opts = {
-			suggestion = {
-				enabled = true,
-				auto_trigger = true,
-				keymap = {
+			provider = "ollama",
+			auto_suggestions_provider = "ollama",
+			ollama = {
+				endpoint = "http://127.0.0.1:11434",
+				model = "qwen2.5-coder:7b",
+			},
+			use_absolute_path = true,
+			behaviour = {
+				auto_suggestions = false,
+				auto_set_highlight_group = true,
+			},
+			mappings = {
+				suggestion = {
 					accept = "<C-c>",
-					next = "<M-e>",
-					prev = "<M-q>",
+					next = "<M-]>",
+					prev = "<M-[>",
+					dismiss = "<C-]>",
 				},
 			},
-			panel = { enabled = false },
+		},
+		build = "make",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
 		},
 	},
-	{ "AndreM222/copilot-lualine" },
 }

@@ -21,37 +21,6 @@ capabilities.textDocument.foldingRange = {
 	lineFoldingOnly = true,
 }
 
-for _, ls in pairs(vim.lsp.get_clients{}) do
-	local config = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-		root_dir = require("lspconfig").util.root_pattern(".git"),
-	}
-	if ls.name == "clangd" then
-		config.cmd = {
-			"clangd",
-			"--offset-encoding=utf-16",
-		}
-	end
-	if ls.name == "pyright" then
-		config.settings = {
-			python = {
-				analysis = {
-					typeCheckingMode = "basic",
-					autoSearchPaths = true,
-					useLibraryCodeForTypes = true,
-					diagnosticMode = "workspace",
-				},
-			},
-		}
-	end
-	if ls.name == "tailwindcss" then
-		ls.server_capabilities.completionProvider.triggerCharacters =
-			{ '"', "'", "`", ".", "(", "[", "!", "/", ":" }
-	end
-	require("lspconfig")[ls].setup(config)
-end
-
 -- Disable inlay hints in insert mode
 vim.api.nvim_create_autocmd({ "LspAttach", "InsertEnter", "InsertLeave" }, {
 	callback = function(args)
@@ -59,20 +28,3 @@ vim.api.nvim_create_autocmd({ "LspAttach", "InsertEnter", "InsertLeave" }, {
 		vim.lsp.inlay_hint.enable(enabled, { bufnr = args.buf })
 	end,
 })
-
--- Autocmd for async cache to register buffer for VectorCode
--- vim.api.nvim_create_autocmd("LspAttach", {
---   callback = function()
--- 		local cacher = require("vectorcode.cacher")
---     local bufnr = vim.api.nvim_get_current_buf()
---     cacher.async_check("config", function()
---       cacher.register_buffer(
---         bufnr,
---         { notify = false, n_query = 10 },
---         require("vectorcode.utils").lsp_document_symbol_cb(),
---         { "BufWritePost" }
---       )
---     end, nil)
---   end,
---   desc = "Register buffer for VectorCode",
--- })
