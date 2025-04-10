@@ -14,9 +14,6 @@ keymap("n", "g#", "g#zz", opts)
 keymap("x", "p", [["_dP]])
 keymap("n", "q:", ":q<cr>")
 
--- Ctrl + S to save
-keymap("n", "<C-s>", "<Cmd>write<CR>", opts)
-
 -- Navigation in Insert mode
 keymap("i", "<C-h>", "<Left>", opts)
 keymap("i", "<C-j>", "<Down>", opts)
@@ -27,23 +24,6 @@ keymap("i", "<C-l>", "<Right>", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
--- Tmux Navigation
--- keymap("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", opts)
--- keymap("n", "<C-j>", "<Cmd>NvimTmuxNavigateDown<CR>", opts)
--- keymap("n", "<C-k>", "<Cmd>NvimTmuxNavigateUp<CR>", opts)
--- keymap("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", opts)
--- keymap("n", "<C-\\>", "<Cmd>NvimTmuxNavigateLastActive<CR>", opts)
-
-keymap("n", "<leader>C", ":Cheatsheet<CR>")
-
--- -- Molten Keymaps
--- keymap("n", "<leader>mi", ":MoltenInit<CR>", { silent = true, desc = "Molten Init Kernel" })
--- keymap("n", "<leader>ml", ":MoltenEvaluateLine<CR>", { silent = true, desc = "Molten Evaluate Line" })
--- keymap("v", "<leader>mv", ":<C-u>MoltenEvaluateVisual<CR>gv<ESC>", { silent = true, desc = "Molten Evaluate Visual" })
--- keymap("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "Molten Hide Output" })
--- keymap("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { silent = true, desc = "Molten Enter Output" })
-
--- keymap({ "n", "v" }, "<leader>A", "<Cmd>Gen<CR>", { desc = "Use Local Ollama Model" })
 keymap({ "n", "v" }, "<leader>L", "<Cmd>LiveServerStart<CR>", { desc = "Start LiveServer" })
 keymap({ "n", "v" }, "<leader>S", "<Cmd>LiveServerStop<CR>", { desc = "Stop LiveServer" })
 

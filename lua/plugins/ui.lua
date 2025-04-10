@@ -41,6 +41,15 @@ return {
 				hl(0, "NormalFloat", { fg = "NONE", bg = "NONE" })
 				hl(0, "MsgArea", { fg = "NONE", bg = "NONE" })
 				hl(0, "NormalNC", { fg = "NONE", bg = "NONE" })
+				hl(0, "FloatBorder", { fg = "#45475A", bg = "NONE" })
+				hl(0, "SnacksPickerTitle", { bg = "#7aa2f7", fg = "NONE" })
+				hl(0, "SnacksPickerPreview", { bg = "NONE" })
+				hl(0, "SnacksPickerList", { bg = "NONE" })
+				hl(0, "SnacksPickerListTitle", { bg = "#9ece6a", fg = "NONE" })
+				hl(0, "SnacksPickerInputTitle", { bg = "NONE", fg = "NONE" })
+				hl(0, "SnacksPickerInputBorder", { bg = "NONE", fg = "NONE" })
+				hl(0, "SnacksPickerInputSearch", { bg = "NONE", fg = "NONE" })
+				hl(0, "SnacksPickerInput", { bg = "NONE" })
 			end
 			vim.api.nvim_create_autocmd("ColorScheme", {
 				pattern = "*",

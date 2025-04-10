@@ -1,5 +1,3 @@
-local Icons = require("config.icons")
-
 local config = {
 	close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 	sources = {
@@ -35,18 +33,6 @@ local config = {
 			expander_expanded = "",
 			expander_highlight = "NeoTreeExpander",
 		},
-		icon = {
-			folder_closed = "",
-			folder_open = "",
-			folder_empty = "",
-			folder_empty_open = "",
-			-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-			-- then these will never be used.
-			default = " ",
-		},
-		modified = { symbol = "" },
-		git_status = { symbols = Icons.git },
-		diagnostics = { symbols = Icons.diagnostics },
 	},
 	window = {
 		mappings = {
