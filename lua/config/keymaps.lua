@@ -1,7 +1,3 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -19,10 +15,6 @@ keymap("i", "<C-h>", "<Left>", opts)
 keymap("i", "<C-j>", "<Down>", opts)
 keymap("i", "<C-k>", "<Up>", opts)
 keymap("i", "<C-l>", "<Right>", opts)
-
--- Indent in Visual mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
 
 keymap({ "n", "v" }, "<leader>L", "<Cmd>LiveServerStart<CR>", { desc = "Start LiveServer" })
 keymap({ "n", "v" }, "<leader>S", "<Cmd>LiveServerStop<CR>", { desc = "Stop LiveServer" })
