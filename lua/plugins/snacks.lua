@@ -237,8 +237,7 @@ return {
 			},
 			words = { enabled = false },
 			indent = {
-				scope = { enabled = false },
-				char = "│",
+				scope = { enabled = true, char = "┋" },
 			},
 			input = { enabled = true },
 		},
