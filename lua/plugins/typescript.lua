@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd("FileType", {
 return {
 	{
 		"barrett-ruth/live-server.nvim",
-		cmd = { "LiveServerStart", "LiveServerStop" },
+		cmd = { "LiveServerStart", "LiveServerStop", "LiveServerToggle" },
 		config = true,
 	},
 	{

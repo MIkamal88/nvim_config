@@ -1,39 +1,53 @@
+local DISABLED_FILETYPES = {
+	"DiffviewFileHistory",
+	"DiffviewFiles",
+	"checkhealth",
+	"copilot-chat",
+	"fugitive",
+	"git",
+	"gitcommit",
+	"help",
+	"lspinfo",
+	"man",
+	"neo-tree",
+	"qf",
+	"query",
+	"scratch",
+	"startuptime",
+}
+
 return {
 	{
-		"L3MON4D3/LuaSnip",
-		build = "make install_jsregexp",
-		event = "InsertEnter",
-		config = function()
-			local types = require("luasnip.util.types")
-
-			require("luasnip.loaders.from_vscode").lazy_load()
-			require("luasnip").setup({
-				history = true,
-				delete_check_events = "TextChanged",
-				-- Display a cursor-like placeholder in unvisited nodes
-				-- of the snippet.
-				ext_opts = {
-					[types.insertNode] = {
-						unvisited = {
-							virt_text = { { "|", "Conceal" } },
-							virt_text_pos = "inline",
-						},
-					},
-				},
-			})
-		end,
-	},
-	{
 		"saghen/blink.cmp",
-		---@class PluginLspOpts
 		opts = {
 			enabled = function()
-				return not vim.list_contains({ "lazy" }, vim.bo.filetype)
-					and vim.bo.buftype ~= "prompt"
-					and vim.b.completion ~= false
+				local buftype = vim.bo.buftype
+				local filetype = vim.bo.filetype
+				return not (
+					buftype == "nofile"
+					or buftype == "nowrite"
+					or buftype == "prompt"
+					or vim.tbl_contains(DISABLED_FILETYPES, filetype)
+				)
 			end,
+
 			completion = {
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 100,
+					window = {
+						border = "single",
+						max_height = 20,
+						max_width = 50,
+					},
+				},
+				list = {
+					selection = {
+						auto_insert = false,
+					},
+				},
 				menu = {
+					-- border = "single",
 					draw = {
 						components = {
 							kind_icon = {
@@ -72,6 +86,16 @@ return {
 					},
 				},
 			},
+
+			signature = {
+				enabled = true,
+				window = {
+					border = "single",
+					max_height = 20,
+					max_width = 50,
+				},
+			},
+
 			keymap = {
 				preset = "default",
 				["<Enter>"] = {

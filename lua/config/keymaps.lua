@@ -16,8 +16,7 @@ keymap("i", "<C-j>", "<Down>", opts)
 keymap("i", "<C-k>", "<Up>", opts)
 keymap("i", "<C-l>", "<Right>", opts)
 
-keymap({ "n", "v" }, "<leader>L", "<Cmd>LiveServerStart<CR>", { desc = "Start LiveServer" })
-keymap({ "n", "v" }, "<leader>S", "<Cmd>LiveServerStop<CR>", { desc = "Stop LiveServer" })
+keymap({ "n", "v" }, "<leader>.", "<Cmd>LiveServerToggle<CR>", { desc = "Toggle LiveServer" })
 
 keymap("n", "<leader>uH", function()
 	local attached = require("colorizer").is_buffer_attached()

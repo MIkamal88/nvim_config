@@ -92,6 +92,29 @@ return {
 							},
 						},
 					},
+					notifications = {
+						layout = {
+							preview = true,
+							layout = {
+								backdrop = false,
+								row = 1,
+								width = 0.4,
+								min_width = 120,
+								height = 0.8,
+								border = "none",
+								box = "vertical",
+								{
+									win = "input",
+									height = 1,
+									border = "single",
+									title = "{title} {live} {flags}",
+									title_pos = "center",
+								},
+								{ win = "list", border = "single" },
+								{ win = "preview", title = "{preview}", border = "single" },
+							},
+						},
+					},
 					buffers = {
 						prompt = "󰍉 ",
 						layout = {
