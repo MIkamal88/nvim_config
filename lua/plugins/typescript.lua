@@ -4,17 +4,11 @@ vim.api.nvim_create_user_command("AttachOrReloadColors", function()
 	end
 	require("colorizer").attach_to_buffer(0)
 end, { nargs = 0 })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "csv",
-	desc = "Enable CSV View on .csv files",
-	callback = function()
-		require("csvview").enable()
-	end,
-})
 
 return {
 	{
 		"barrett-ruth/live-server.nvim",
+		event = "LspAttach",
 		cmd = { "LiveServerStart", "LiveServerStop", "LiveServerToggle" },
 		config = true,
 	},
@@ -62,6 +56,7 @@ return {
 
 	{
 		"razak17/tailwind-fold.nvim",
+		event = "LspAttach",
 		opts = {
 			min_chars = 50,
 		},
@@ -71,6 +66,7 @@ return {
 
 	{
 		"MaximilianLloyd/tw-values.nvim",
+		event = "LspAttach",
 		keys = {
 			{ "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
 		},
@@ -94,16 +90,19 @@ return {
 
 	{
 		"dmmulroy/tsc.nvim",
+		event = "LspAttach",
 		cmd = { "TSC" },
 		config = true,
 	},
 
 	{
 		"dmmulroy/ts-error-translator.nvim",
+		event = "LspAttach",
 		config = true,
 	},
 	{
 		"hat0uma/csvview.nvim",
+		event = "LspAttach",
 		---@module "csvview"
 		---@type CsvView.Options
 		opts = {

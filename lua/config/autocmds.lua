@@ -24,3 +24,12 @@ vim.api.nvim_create_autocmd({ "LspAttach", "InsertEnter", "InsertLeave" }, {
 		vim.lsp.inlay_hint.enable(enabled, { bufnr = args.buf })
 	end,
 })
+
+-- CSV view on .csv files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "csv",
+	desc = "Enable CSV View on .csv files",
+	callback = function()
+		require("csvview").enable()
+	end,
+})

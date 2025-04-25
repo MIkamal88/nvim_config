@@ -20,7 +20,7 @@ return {
 	-- { "AndreM222/copilot-lualine" },
 	{
 		"yetone/avante.nvim",
-		event = "BufEnter",
+		event = "InsertEnter",
 		version = false,
 		opts = {
 			provider = "ollama",
