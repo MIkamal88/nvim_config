@@ -19,35 +19,65 @@ return {
 	-- },
 	-- { "AndreM222/copilot-lualine" },
 	{
-		"yetone/avante.nvim",
-		event = "InsertEnter",
-		version = false,
+		"ggml-org/llama.vim",
+		commit = "a49449cf",
+		init = function()
+			vim.g.llama_config = {
+				endpoint = "http://localhost:11434/infill",
+				show_info = false,
+				keymap_accept_full = "<C-c>",
+			}
+		end,
+	},
+	{
+		"olimorris/codecompanion.nvim",
 		opts = {
-			provider = "ollama",
-			auto_suggestions_provider = "ollama",
-			ollama = {
-				endpoint = "http://127.0.0.1:11434",
-				model = "qwen2.5-coder:7b",
-			},
-			use_absolute_path = true,
-			behaviour = {
-				auto_suggestions = false,
-				auto_set_highlight_group = true,
-			},
-			mappings = {
-				suggestion = {
-					accept = "<C-c>",
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
+			strategies = {
+				chat = {
+					adapter = "llama_cpp",
+				},
+				inline = {
+					adapter = "llama_cpp",
+				},
+				cmd = {
+					adapter = "llama_cpp",
 				},
 			},
+			adapters = {
+				llama_cpp = function()
+					return require("codecompanion.adapters").extend("openai_compatible", {
+						name = "llama_cpp",
+						formatted_name = "LlamaCPP",
+						schema = {
+							model = {
+								default = "qwen-2.5.1-coder-7b",
+							},
+						},
+						env = {
+							url = "http://localhost:11434",
+							api_key = "TERM",
+						},
+						handlers = {
+							inline_output = function(self, data)
+								local openai = require("codecompanion.adapters.openai")
+								return openai.handlers.inline_output(self, data)
+							end,
+							chat_output = function(self, data)
+								local openai = require("codecompanion.adapters.openai")
+								local result = openai.handlers.chat_output(self, data)
+								if result ~= nil then
+									result.output.role = "assistant"
+								end
+								return result
+							end,
+						},
+					})
+				end,
+			},
 		},
-		build = "make",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
 			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
+			"nvim-treesitter/nvim-treesitter",
 		},
 	},
 }

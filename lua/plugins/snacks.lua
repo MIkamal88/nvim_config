@@ -166,6 +166,7 @@ return {
 					files = {
 						prompt = "󰍉 ",
 						layout = {
+							preview = true,
 							layout = {
 								backdrop = false,
 								row = 2,
@@ -180,9 +181,15 @@ return {
 									row = 1,
 									border = "single",
 									title = "{title} {live} {flags}",
-									title_pos = "left",
+									title_pos = "center",
 								},
 								{ win = "list", border = "single" },
+								{
+									win = "preview",
+									title = "{preview}",
+									border = "single",
+									minimal = true,
+								},
 							},
 						},
 					},

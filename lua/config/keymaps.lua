@@ -28,3 +28,6 @@ keymap("n", "<leader>uH", function()
 		vim.notify("Disabled **Colorizer Highlights**", vim.log.levels.WARN, { title = "Tabs" })
 	end
 end, { desc = "Toggle Colorizer" })
+
+keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", opts)
+keymap({ "n", "v" }, "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", opts)
