@@ -25,7 +25,7 @@ M.theme = function()
 		normal = {
 			a = { fg = gray, bg = azbg, bold = true },
 			b = { fg = gray, bg = bybg },
-			c = { fg = gray, bg = innerbg },
+			c = { fg = gray, bg = bybg},
 		},
 		insert = {
 			a = { fg = gray, bg = azbg, bold = true },

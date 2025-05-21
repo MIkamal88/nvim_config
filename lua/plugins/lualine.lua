@@ -41,7 +41,6 @@ return {
 					},
 					lualine_c = { { "filename", path = 1, symbols = confui.file_status_symbol }, { "searchcount" } }, -- relative path
 					lualine_x = {
-						{ "copilot", "diagnostics", sources = { "get_diagnostics_in_current_root_dir" } },
 						confui.encoding,
 						confui.fileformat,
 						"filetype",
