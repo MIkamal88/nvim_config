@@ -173,4 +173,49 @@ end
 
 git_workspace_diff_setup()
 
+-- Define spinner frames and state
+local spinner_frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+local spinner_index = 1
+local spinner_active = false
+
+-- Timer setup
+local uv = vim.uv or vim.loop
+local spinner_timer = uv.new_timer()
+
+-- Lualine component
+M.codecompanion_spinner = function()
+  if spinner_active then
+    return spinner_frames[spinner_index] .. " 󰚩 "
+  else
+    return " 󰡖 "
+  end
+end
+
+-- Register autocommands for CodeCompanion
+vim.api.nvim_create_autocmd("User", {
+  desc = "CodeCompanion spinner start",
+  pattern = "CodeCompanionRequestStarted",
+  callback = function()
+    if spinner_active then return end  -- already running
+    spinner_active = true
+    spinner_index = 1
+    spinner_timer:start(0, 100, vim.schedule_wrap(function()
+      spinner_index = (spinner_index % #spinner_frames) + 1
+      vim.cmd("redrawstatus") -- refresh lualine
+    end))
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  desc = "CodeCompanion spinner stop",
+  pattern = "CodeCompanionRequestFinished",
+  callback = function()
+    if not spinner_active then return end
+    spinner_active = false
+    spinner_timer:stop()
+    spinner_index = 1
+    vim.cmd("redrawstatus")
+  end,
+})
+
 return M

@@ -55,5 +55,10 @@ return {
 		event = { "InsertEnter", "CmdlineEnter" },
 	},
 
-	{ "nvim-telescope/telescope.nvim", lazy = true },
+	{
+		"nvzone/floaterm",
+		dependencies = "nvzone/volt",
+		opts = {},
+		cmd = "FloatermToggle",
+	},
 }

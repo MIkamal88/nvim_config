@@ -18,16 +18,20 @@ keymap("i", "<C-l>", "<Right>", opts)
 
 keymap({ "n", "v" }, "<leader>.", "<Cmd>LiveServerToggle<CR>", { desc = "Toggle LiveServer" })
 
-keymap("n", "<leader>uH", function()
-	local attached = require("colorizer").is_buffer_attached()
-	if not attached then
-		require("colorizer").attach_to_buffer(0)
-		vim.notify("Enabled **Colorizer Highlights**", vim.log.levels.INFO, { title = "Tabs" })
-	else
-		require("colorizer").detach_from_buffer(0)
-		vim.notify("Disabled **Colorizer Highlights**", vim.log.levels.WARN, { title = "Tabs" })
-	end
-end, { desc = "Toggle Colorizer" })
-
 keymap({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", opts)
-keymap({ "n", "v" }, "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", opts)
+keymap({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", opts)
+
+keymap({ "n", "v", "t" }, "<C-`>", "<cmd>FloatermToggle<cr>", opts)
+
+local esc_timer = (vim.uv or vim.loop).new_timer()
+keymap("t", "<Esc>", function()
+	if esc_timer:is_active() then
+		esc_timer:stop()
+		vim.cmd("stopinsert")
+	else
+		esc_timer:start(200, 0, function() end)
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "t", false)
+	end
+end, { expr = false, desc = "Double escape to normal mode" })
+
+keymap("n", "<leader>at", "LlamaToggle", { desc = "Toggle AI completion" })
