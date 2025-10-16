@@ -142,14 +142,7 @@ return {
 				},
 				sources = {
 					default = function()
-						local sources = {
-							"buffer",
-							"lsp",
-							"path",
-							"snippets",
-							"lazydev",
-							"dadbod",
-						}
+						local sources = { "buffer", "lsp", "path", "snippets", "lazydev", "dadbod" }
 						if vim.bo.filetype == "gitcommit" then
 							sources = is_online() and { "buffer", "git" } or { "buffer" }
 						end
@@ -231,7 +224,23 @@ return {
 						},
 					},
 				},
-				snippets = { preset = "luasnip" },
+				snippets = {
+					preset = "luasnip",
+					expand = function(snippet)
+						require("luasnip").lsp_expand(snippet)
+					end,
+					active = function(filter)
+						if filter and filter.direction then
+							return require("luasnip").jumpable(filter.direction)
+						end
+						return require("luasnip").in_snippet()
+					end,
+					jump = function(direction)
+						require("luasnip").jump(direction)
+					end,
+
+					score_offset = 100,
+				},
 				cmdline = {
 					enabled = true,
 					completion = {
@@ -260,12 +269,16 @@ return {
 		config = function()
 			local luasnip = require("luasnip")
 			luasnip.setup({
+				snippets_path = { vim.fn.stdpath("config") .. "/snippets" },
 				history = true,
 				updateevents = "TextChanged,TextChangedI",
+				delete_check_events = "TextChanged",
 				enable_autosnippets = true,
 			})
 			-- add vscode exported completions
 			require("luasnip.loaders.from_vscode").lazy_load()
+			-- load loremipsum snippets from friendly-snippets
+			require("luasnip").filetype_extend("all", { "loremipsum" })
 			local r = require("utils.remaps")
 
 			r.map({ "i", "s" }, "<c-n>", function()
