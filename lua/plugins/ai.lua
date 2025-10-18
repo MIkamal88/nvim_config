@@ -3,6 +3,26 @@ local function load_system_prompt()
 	return table.concat(lines, "\n")
 end
 
+local function load_prompt_library()
+	local path = "/home/m_kamal/.config/nvim/lua/utils/prompts/prompt_library.json"
+	local file = io.open(path, "r")
+	if not file then
+		vim.notify("Could not open " .. path, vim.log.levels.ERROR)
+		return {}
+	end
+
+	local content = file:read("*a")
+	file:close()
+
+	local ok, data = pcall(vim.fn.json_decode, content)
+	if not ok then
+		vim.notify("Error parsing prompt_library.json", vim.log.levels.ERROR)
+		return {}
+	end
+
+	return data
+end
+
 return {
 	-- {
 	-- 	"zbirenbaum/copilot.lua",
@@ -47,10 +67,12 @@ return {
 			"nvim-lua/plenary.nvim",
 			"MeanderingProgrammer/render-markdown.nvim",
 			"ravitemer/codecompanion-history.nvim",
+			"ravitemer/mcphub.nvim",
 		},
 
 		opts = {
 			opts = {
+				log_level = "DEBUG",
 				system_prompt = function()
 					return load_system_prompt()
 				end,
@@ -76,19 +98,23 @@ return {
 				cmd = { adapter = "llama_cpp" },
 			},
 
-			prompt_library = {
-				["JavaScript console"] = {
-					strategy = "chat",
-					description = "Act as a JavaScript console",
-					prompts = {
-						{
-							role = "system",
-							content = "I want you to act as a javascript console. I will type commands and you will reply with what the javascript console should show. I want you to only reply with the terminal output inside one unique code block, and nothing else. do not write explanations. do not type commands unless I instruct you to do so. when I need to tell you something in english, I will do so by putting text inside curly brackets {like this}.",
-						},
+			prompt_library = load_prompt_library(),
+
+			extensions = {
+				mcphub = {
+					callback = "mcphub.extensions.codecompanion",
+					opts = {
+						make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
+						show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
+						add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+						show_result_in_chat = true, -- Show tool results directly in chat buffer
+						format_tool = nil, -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
+						-- MCP Resources
+						make_vars = true, -- Convert MCP resources to #variables for prompts
+						-- MCP Prompts
+						make_slash_commands = true, -- Add MCP prompts as /slash commands
 					},
 				},
-			},
-			extensions = {
 				history = {
 					enabled = true,
 					opts = {
@@ -109,4 +135,3 @@ return {
 	},
 }
 -- Simplify
--- Explain

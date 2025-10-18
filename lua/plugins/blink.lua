@@ -36,7 +36,17 @@ return {
 		dependencies = { "Kaiser-Yang/blink-cmp-git" },
 		config = function()
 			require("blink.cmp").setup({
-				fuzzy = { implementation = "rust" },
+				fuzzy = {
+					implementation = "rust",
+					frecency = {
+						enabled = true,
+						path = vim.fn.stdpath("state") .. "/blink/cmp/frecency.dat",
+					},
+					sorts = {
+						"score",
+						"sort_text",
+					},
+				},
 				appearance = {
 					nerd_font_variant = "mono",
 				},
@@ -88,6 +98,11 @@ return {
 								},
 							},
 						},
+					},
+					trigger = {
+						show_on_trigger_character = true,
+						show_on_insert_on_trigger_character = true,
+						show_on_x_blocked_trigger_characters = { "'", '"', "(", "{" },
 					},
 					list = {
 						selection = {
@@ -159,6 +174,36 @@ return {
 							max_items = 3,
 							module = "blink.cmp.sources.buffer",
 							score_offset = 65,
+							transform_items = function(a, items)
+								local keyword = a.get_keyword()
+								local correct, case
+								if keyword:match("^%l") then
+									correct = "^%u%l+$"
+									case = string.lower
+								elseif keyword:match("^%u") then
+									correct = "^%l+$"
+									case = string.upper
+								else
+									return items
+								end
+
+								-- avoid duplicates from the corrections
+								local seen = {}
+								local out = {}
+								for _, item in ipairs(items) do
+									local raw = item.insertText
+									if raw and raw:match(correct) then
+										local text = case(raw:sub(1, 1)) .. raw:sub(2)
+										item.insertText = text
+										item.label = text
+									end
+									if not seen[item.insertText] then
+										seen[item.insertText] = true
+										table.insert(out, item)
+									end
+								end
+								return out
+							end,
 						},
 						path = {
 							name = "Path",
@@ -238,8 +283,6 @@ return {
 					jump = function(direction)
 						require("luasnip").jump(direction)
 					end,
-
-					score_offset = 100,
 				},
 				cmdline = {
 					enabled = true,
