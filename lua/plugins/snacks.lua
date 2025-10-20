@@ -1,7 +1,6 @@
 return {
 	{
 		"folke/snacks.nvim",
-		---@type snacks.Config
 		opts = {
 			dashboard = {
 				preset = {
@@ -48,7 +47,6 @@ return {
 			dim = { animate = { enabled = false } },
 			zen = { enabled = false },
 			picker = {
-				ui_select = true,
 				layout = {
 					preview = true,
 					layout = {
@@ -59,7 +57,6 @@ return {
 						height = 0.8,
 						border = "none",
 						box = "vertical",
-						title = "",
 						{
 							win = "input",
 							height = 1,
@@ -75,7 +72,7 @@ return {
 								win = "preview",
 								title = "{preview}",
 								border = "single",
-								width = 0.65,
+								width = 0.7,
 								minimal = false,
 							},
 						},

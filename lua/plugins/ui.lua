@@ -1,5 +1,39 @@
 return {
 	{
+		"folke/noice.nvim",
+		opts = {
+			cmdline = { view = "cmdline" },
+			presets = {
+				lsp_doc_border = true,
+			},
+			notify = {
+				format = "popup"
+			},
+			views = {
+				mini = {
+					border = {
+						style = "single",
+					},
+				},
+				hover = {
+					border = {
+						style = "single",
+					},
+				},
+				confirm = {
+					border = {
+						style = "single",
+					},
+				},
+				popup = {
+					border = {
+						style = "single",
+					},
+				},
+			},
+		},
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		event = "VeryLazy",
 		opts = {
@@ -21,7 +55,7 @@ return {
 			c.base08 = "#f26e74"
 			local hl = vim.api.nvim_set_hl
 			local function set_highlights()
-				hl(0, "Visual", { fg = 'NONE', bg = c.one_bg2 })
+				hl(0, "Visual", { fg = "NONE", bg = c.one_bg2 })
 				hl(0, "NeoTreeDirectoryIcon", { fg = c.yellow, bg = "NONE" })
 				hl(0, "NeoTreeDirectoryName", { fg = c.yellow, bg = "NONE" })
 				hl(0, "NeoTreeGitModified", { fg = c.yellow, bg = "NONE" })

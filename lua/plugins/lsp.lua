@@ -42,13 +42,6 @@ end
 
 return {
 	{
-		"folke/noice.nvim",
-		opts = {
-			cmdline = { view = "cmdline" },
-			presets = { lsp_doc_border = true },
-		},
-	},
-	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		ft = { "markdown", "codecompanion" },
 		config = function()
@@ -111,27 +104,6 @@ return {
 				},
 				quote = { icon = "▐" },
 				pipe_table = { cell = "raw" },
-				link = {
-					wiki = { icon = "󱗖 ", highlight = "RenderMarkdownWikiLink" },
-					custom = {
-						gdrive = {
-							pattern = "drive%.google%.com/drive",
-							icon = " ",
-						},
-						spreadsheets = {
-							pattern = "docs%.google%.com/spreadsheets",
-							icon = "󰧷 ",
-						},
-						document = {
-							pattern = "docs%.google%.com/document",
-							icon = "󰈙 ",
-						},
-						presentation = {
-							pattern = "docs%.google%.com/presentation",
-							icon = "󰈩 ",
-						},
-					},
-				},
 				latex = { enabled = false },
 				html = { comment = { conceal = false } },
 				on = {

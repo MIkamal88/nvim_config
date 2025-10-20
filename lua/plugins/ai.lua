@@ -1,28 +1,3 @@
-local function load_system_prompt()
-	local lines = vim.fn.readfile("/home/m_kamal/.config/nvim/lua/utils/sys_prompt.txt")
-	return table.concat(lines, "\n")
-end
-
-local function load_prompt_library()
-	local path = "/home/m_kamal/.config/nvim/lua/utils/prompts/prompt_library.json"
-	local file = io.open(path, "r")
-	if not file then
-		vim.notify("Could not open " .. path, vim.log.levels.ERROR)
-		return {}
-	end
-
-	local content = file:read("*a")
-	file:close()
-
-	local ok, data = pcall(vim.fn.json_decode, content)
-	if not ok then
-		vim.notify("Error parsing prompt_library.json", vim.log.levels.ERROR)
-		return {}
-	end
-
-	return data
-end
-
 return {
 	-- {
 	-- 	"zbirenbaum/copilot.lua",
@@ -59,79 +34,65 @@ return {
 		end,
 	},
 	{
-		"olimorris/codecompanion.nvim",
-		config = function(_, opts)
-			require("codecompanion").setup(opts)
-		end,
+		"ravitemer/mcphub.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"MeanderingProgrammer/render-markdown.nvim",
-			"ravitemer/codecompanion-history.nvim",
-			"ravitemer/mcphub.nvim",
 		},
-
-		opts = {
-			opts = {
-				log_level = "DEBUG",
-				system_prompt = function()
-					return load_system_prompt()
-				end,
-			},
-			adapters = {
-				llama_cpp = function()
-					return require("codecompanion.adapters").extend("openai_compatible", {
-						name = "llama_cpp",
-						formatted_name = "LlamaCPP",
-						schema = { model = { cache_prompt = { default = true, mapping = "parameters" } } },
-						env = {
-							url = "http://localhost:11434",
-							api_key = "TERM",
-							chat_url = "/v1/chat/completions",
-						},
-					})
-				end,
-			},
-
-			strategies = {
-				chat = { adapter = "llama_cpp" },
-				inline = { adapter = "llama_cpp" },
-				cmd = { adapter = "llama_cpp" },
-			},
-
-			prompt_library = load_prompt_library(),
-
-			extensions = {
-				mcphub = {
-					callback = "mcphub.extensions.codecompanion",
-					opts = {
-						make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
-						show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
-						add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
-						show_result_in_chat = true, -- Show tool results directly in chat buffer
-						format_tool = nil, -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
-						-- MCP Resources
-						make_vars = true, -- Convert MCP resources to #variables for prompts
-						-- MCP Prompts
-						make_slash_commands = true, -- Add MCP prompts as /slash commands
-					},
-				},
-				history = {
+		build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+		config = function()
+			require("mcphub").setup({
+				--- `mcp-hub` binary related options-------------------
+				config = vim.fn.expand("~/.config/mcphub/servers.json"),
+				port = 37373,
+				shutdown_delay = 5 * 60 * 000,
+				use_bundled_binary = false,
+				mcp_request_timeout = 60000,
+				global_env = {}, -- Global environment variables available to all MCP servers (can be a table or a function returning a table)
+				workspace = {
 					enabled = true,
-					opts = {
-						keymap = "gh",
-						save_chat_keymap = "sc",
-						auto_save = true,
-						expiration_days = 0,
-						auto_generate_title = true,
-						continue_last_chat = false,
-						delete_on_clearing_chat = false,
-						dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
-						enable_logging = false,
-						max_history = 10,
+					look_for = { ".mcphub/servers.json", ".vscode/mcp.json", ".cursor/mcp.json" }, -- Files to look for when detecting project boundaries (VS Code format supported)
+					reload_on_dir_changed = true,
+					port_range = { min = 40000, max = 41000 }, -- Port range for generating unique workspace ports
+					get_port = nil, -- Optional function returning custom port number. Called when generating ports to allow custom port assignment logic
+				},
+
+				---Chat-plugin related options-----------------
+				auto_approve = false, -- Auto approve mcp tool calls
+				auto_toggle_mcp_servers = true, -- Let LLMs start and stop MCP servers automatically
+
+				--- Plugin specific options-------------------
+				native_servers = {}, -- add your custom lua native servers here
+				builtin_tools = {
+					edit_file = {
+						parser = {
+							track_issues = true,
+							extract_inline_content = true,
+						},
+						locator = {
+							fuzzy_threshold = 0.8,
+							enable_fuzzy_matching = true,
+						},
+						ui = {
+							go_to_origin_on_complete = true,
+							keybindings = {
+								accept = ".",
+								reject = ",",
+								next = "n",
+								prev = "p",
+								accept_all = "ga",
+								reject_all = "gr",
+							},
+						},
 					},
 				},
-			},
-		},
+				ui = {
+					window = {
+						width = 0.8,
+						height = 0.8,
+						border = "single",
+					},
+				},
+			})
+		end,
 	},
 }
--- Simplify
