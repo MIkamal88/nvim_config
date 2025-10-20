@@ -43,8 +43,8 @@ return {
 						path = vim.fn.stdpath("state") .. "/blink/cmp/frecency.dat",
 					},
 					sorts = {
-						"score",
 						"sort_text",
+						"score",
 					},
 				},
 				appearance = {
@@ -237,7 +237,7 @@ return {
 							name = "Snippets",
 							module = "blink.cmp.sources.snippets",
 							min_keyword_length = 2,
-							score_offset = 85,
+							score_offset = 80,
 						},
 						dadbod = {
 							name = "Dadbod",
@@ -250,14 +250,13 @@ return {
 							module = "blink-cmp-git",
 						},
 						lazydev = {
-							name = "lazydev",
+							name = "Lazydev",
 							module = "lazydev.integrations.blink",
 							score_offset = 100,
 						},
 						lsp = {
 							name = "lsp",
 							module = "blink.cmp.sources.lsp",
-							fallbacks = {},
 							score_offset = 95,
 							transform_items = function(_, items)
 								local cmp_kind = require("blink.cmp.types").CompletionItemKind
