@@ -12,8 +12,8 @@ return {
 				options = {
 					icons_enabled = true,
 					theme = require("config.microchad.lualine_theme").theme,
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
 					always_divide_middle = false,
 					disabled_filetypes = {
 						winbar = {
@@ -33,14 +33,21 @@ return {
 					},
 				},
 				sections = {
-					lualine_a = { "mode" },
+					lualine_a = { { "mode", icon = "" } },
 					lualine_b = {
 						"branch",
 						confui.project_name,
-						confui.get_workspace_diff,
+						{
+							confui.get_workspace_diff,
+							separator = "",
+						},
 					},
+					lualine_c = {},
 					lualine_x = {
-						confui.codecompanion_spinner,
+						{
+							confui.codecompanion_spinner,
+							separator = "",
+						},
 						confui.encoding,
 						confui.fileformat,
 						"filetype",
@@ -50,7 +57,7 @@ return {
 				},
 				winbar = {
 					lualine_a = {
-						{ "filetype", icon_only = true },
+						{ "filetype", icon_only = true, separator = "" },
 						{ "filename", path = 1, symbols = confui.file_status_symbol },
 						{ "searchcount" },
 					},
@@ -65,7 +72,7 @@ return {
 				},
 				inactive_winbar = {
 					lualine_a = {
-						{ "filetype", icon_only = true },
+						{ "filetype", icon_only = true, separator = "" },
 						{ "filename", path = 1, symbols = confui.file_status_symbol },
 					},
 				},

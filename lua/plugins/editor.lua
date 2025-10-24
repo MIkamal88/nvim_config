@@ -34,27 +34,7 @@ return {
 			open_fold_hl_timeout = 0,
 		},
 	},
-
 	{ "stevearc/conform.nvim", event = "BufWritePre" },
-
-	{
-		"mfussenegger/nvim-lint",
-		event = "VeryLazy",
-		config = function()
-			require("lint").linters_by_ft = {
-				javascript = { "eslint" },
-				javascriptreact = { "eslint" },
-				typescript = { "eslint" },
-				typescriptreact = { "eslint" },
-			}
-		end,
-	},
-
-	{
-		"windwp/nvim-ts-autotag",
-		event = { "InsertEnter", "CmdlineEnter" },
-	},
-
 	{
 		"nvzone/floaterm",
 		dependencies = "nvzone/volt",

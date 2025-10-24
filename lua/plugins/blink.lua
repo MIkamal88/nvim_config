@@ -43,12 +43,9 @@ return {
 						path = vim.fn.stdpath("state") .. "/blink/cmp/frecency.dat",
 					},
 					sorts = {
-						"sort_text",
 						"score",
+						"sort_text",
 					},
-				},
-				appearance = {
-					nerd_font_variant = "mono",
 				},
 				completion = {
 					menu = {

@@ -16,6 +16,10 @@ require("lazy").setup({
 	spec = {
 		-- add LazyVim and import its plugins
 		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+		{ import = "lazyvim.plugins.extras.lang.typescript" },
+		{ import = "lazyvim.plugins.extras.lang.python" },
+		{ import = "lazyvim.plugins.extras.lang.sql" },
+		{ import = "lazyvim.plugins.extras.lang.tailwind" },
 		{ import = "plugins" },
 	},
 	ui = {
@@ -28,4 +32,15 @@ require("lazy").setup({
 		version = false, -- always use the latest git commit
 	},
 	checker = { enabled = false }, -- automatically check for plugin updates
+	rtp = {
+		-- disable some rtp plugins
+		disabled_plugins = {
+			"gzip",
+			"tarPlugin",
+			"tohtml",
+			"tutor",
+			"netrwPlugin",
+			"zipPlugin",
+		},
+	},
 })

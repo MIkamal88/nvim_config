@@ -1,14 +1,13 @@
+local disabled = {
+	{ "catppuccin" },
+	{ "folke/tokyonight.nvim" },
+	{ "akinsho/bufferline.nvim" },
+}
+
+for i, plugin in ipairs(disabled) do
+	plugin.enabled = false
+end
+
 return {
-	{
-		"akinsho/bufferline.nvim",
-		enabled = false,
-	},
-	{
-		"folke/tokyonight.nvim",
-		enabled = false,
-	},
-	{
-		"catppuccin",
-		enabled = false,
-	},
+	disabled
 }
