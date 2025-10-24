@@ -19,13 +19,4 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		ft = { "html", "svelte", "astro", "vue", "typescriptreact" },
 	},
-  {
-    "luckasRanarison/nvim-devdocs",
-    optional = true,
-    opts = {
-      ensure_installed = {
-        "tailwindcss",
-      },
-    },
-  },
 }

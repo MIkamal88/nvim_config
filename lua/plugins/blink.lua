@@ -33,7 +33,6 @@ vim.api.nvim_create_autocmd("User", {
 return {
 	{
 		"saghen/blink.cmp",
-		dependencies = { "Kaiser-Yang/blink-cmp-git" },
 		config = function()
 			require("blink.cmp").setup({
 				fuzzy = {

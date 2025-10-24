@@ -49,6 +49,7 @@ return {
 				enabled = true,
 				file_types = { "markdown", "codecompanion" },
 				render_modes = true,
+				preset = "obsidian",
 				win_options = {
 					conceallevel = { rendered = 2 },
 					concealcursor = { rendered = "nc" },

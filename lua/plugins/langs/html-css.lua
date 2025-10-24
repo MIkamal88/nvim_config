@@ -76,15 +76,4 @@ return {
 		"windwp/nvim-ts-autotag",
 		event = { "InsertEnter", "CmdlineEnter" },
 	},
-  {
-    "luckasRanarison/nvim-devdocs",
-    optional = true,
-    opts = {
-      ensure_installed = {
-        "html",
-        "css",
-        "sass",
-      },
-    },
-  },
 }

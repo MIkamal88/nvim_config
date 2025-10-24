@@ -101,14 +101,4 @@ return {
   --     { "<leader>tw", function() require('neotest').run.run({ jestCommand = 'jest --watch ' }) end, desc = "Run Watch" },
   --   },
   -- },
-  {
-    "luckasRanarison/nvim-devdocs",
-    optional = true,
-    opts = {
-      ensure_installed = {
-        "react",
-        "typescript",
-      },
-    },
-  },
 }
