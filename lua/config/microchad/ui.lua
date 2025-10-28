@@ -182,7 +182,7 @@ local spinner_active = false
 local uv = vim.uv or vim.loop
 local spinner_timer = uv.new_timer()
 
--- Lualine component
+-- Lualine Spinner component
 M.codecompanion_spinner = function()
   if spinner_active then
     return spinner_frames[spinner_index] .. " 󰚩 "

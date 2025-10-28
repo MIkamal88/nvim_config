@@ -33,6 +33,7 @@ return {
 			c.base08 = "#f26e74"
 			local hl = vim.api.nvim_set_hl
 			local function set_highlights()
+				hl(0, "LSPInlayHint", { fg = "#3B464A" })
 				hl(0, "Visual", { fg = "NONE", bg = c.one_bg2 })
 				hl(0, "NeoTreeDirectoryIcon", { fg = c.yellow, bg = "NONE" })
 				hl(0, "NeoTreeDirectoryName", { fg = c.yellow, bg = "NONE" })

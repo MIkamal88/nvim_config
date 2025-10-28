@@ -36,12 +36,6 @@ return {
 	},
 	{ "stevearc/conform.nvim", event = "BufWritePre" },
 	{
-		"nvzone/floaterm",
-		dependencies = "nvzone/volt",
-		opts = {},
-		cmd = "FloatermToggle",
-	},
-	{
 		"maskudo/devdocs.nvim",
 		lazy = false,
 		dependencies = {

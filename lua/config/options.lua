@@ -19,7 +19,6 @@ opt.termguicolors = true
 -- Faster completions
 opt.updatetime = 200
 
-opt.shell = "fish"
 -- Change DapBreakpoint Icon
 vim.fn.sign_define("DapBreakpoint", { text = "" })
 

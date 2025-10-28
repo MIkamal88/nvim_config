@@ -2,7 +2,6 @@ local disabled = {
 	{ "catppuccin" },
 	{ "folke/tokyonight.nvim" },
 	{ "akinsho/bufferline.nvim" },
-  { "folke/flash.nvim" },
 }
 
 for i, plugin in ipairs(disabled) do
