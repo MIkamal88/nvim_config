@@ -43,6 +43,15 @@ return {
 			end,
 		},
 		adapters = {
+			acp = {
+				claude_code = function()
+					return require("codecompanion.adapters").extend("claude_code", {
+						env = {
+							CLAUDE_CODE_OAUTH_TOKEN = os.getenv("CLAUDE_API")
+						},
+					})
+				end,
+			},
 			llama_cpp = function()
 				return require("codecompanion.adapters").extend("openai_compatible", {
 					name = "llama_cpp",
@@ -58,9 +67,9 @@ return {
 		},
 
 		strategies = {
-			chat = { adapter = "llama_cpp" },
-			inline = { adapter = "llama_cpp" },
-			cmd = { adapter = "llama_cpp" },
+			chat = { adapter = "claude_code" },
+			inline = { adapter = "claude_code" },
+			cmd = { adapter = "claude_code" },
 		},
 
 		prompt_library = load_prompt_library(),
@@ -84,6 +93,10 @@ return {
 				enabled = true,
 				opts = {
 					keymap = "gh",
+					title_generation_opts = {
+						adapter = "llama_cpp",
+						refresh_every_n_prompts = 3,
+					},
 					save_chat_keymap = "sc",
 					auto_save = true,
 					expiration_days = 0,
