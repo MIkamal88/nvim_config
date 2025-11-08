@@ -38,29 +38,26 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-		build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+		build = "npm install -g mcp-hub@latest",
 		config = function()
 			require("mcphub").setup({
-				--- `mcp-hub` binary related options-------------------
 				config = vim.fn.expand("~/.config/mcphub/servers.json"),
 				port = 37373,
 				shutdown_delay = 5 * 60 * 000,
 				use_bundled_binary = false,
 				mcp_request_timeout = 60000,
-				global_env = {}, -- Global environment variables available to all MCP servers (can be a table or a function returning a table)
+				global_env = {}, -- Global environment variables available to all MCP servers
 				workspace = {
 					enabled = true,
-					look_for = { ".mcphub/servers.json", ".vscode/mcp.json", ".cursor/mcp.json" }, -- Files to look for when detecting project boundaries (VS Code format supported)
+					look_for = { ".mcphub/servers.json", ".vscode/mcp.json", ".cursor/mcp.json" },
 					reload_on_dir_changed = true,
 					port_range = { min = 40000, max = 41000 }, -- Port range for generating unique workspace ports
 					get_port = nil, -- Optional function returning custom port number. Called when generating ports to allow custom port assignment logic
 				},
 
-				---Chat-plugin related options-----------------
 				auto_approve = false, -- Auto approve mcp tool calls
 				auto_toggle_mcp_servers = true, -- Let LLMs start and stop MCP servers automatically
 
-				--- Plugin specific options-------------------
 				native_servers = {}, -- add your custom lua native servers here
 				builtin_tools = {
 					edit_file = {

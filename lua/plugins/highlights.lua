@@ -22,7 +22,6 @@ return {
 				},
 				exclude_filetypes = {},
 				exclude_buftypes = {},
-				exclude_buffer = function(bufnr) end,
 			})
 		end,
 	},
@@ -47,7 +46,7 @@ return {
 				hl(0, "LspDiagnosticsSignError", { fg = c.base08, bg = "NONE" })
 				hl(0, "LspDiagnosticsError", { fg = c.base08, bg = "NONE" })
 				hl(0, "CursorLine", { fg = "NONE", bg = c.one_bg2 })
-				hl(0, "GitSignsCurrentLineBlame", { fg = "#061115" })
+				hl(0, "GitSignsCurrentLineBlame", { fg = "#3e445e" })
 				hl(0, "String", { fg = "#82c29c", bg = "NONE" })
 				hl(0, "IblScope", { fg = c.base0E, bg = "NONE" })
 				hl(0, "guibg", { fg = "NONE", bg = "NONE" })

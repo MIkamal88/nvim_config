@@ -5,13 +5,14 @@ return {
 		config = function()
 			local lualine = require("lualine")
 			local diagnostics_sources = require("lualine.components.diagnostics.sources").sources
-			local confui = require("config.microchad.ui")
+			local confui = require("config.microchad.lualine_fn")
 
 			diagnostics_sources.get_diagnostics_in_current_root_dir = confui.get_diagnostics_in_current_root_dir
 			lualine.setup({
 				options = {
 					icons_enabled = true,
 					theme = require("config.microchad.lualine_theme").theme,
+					-- theme = 'iceberg_dark',
 					component_separators = { left = "", right = "" },
 					section_separators = { left = "", right = "" },
 					always_divide_middle = false,
@@ -63,10 +64,7 @@ return {
 					},
 					lualine_c = { " " },
 					lualine_x = {
-						function()
-							return " "
-						end,
-						{ "diagnostics", sources = { "nvim_diagnostic" } },
+						{ "diagnostics", sources = { "nvim_diagnostic" }, draw_empty = true, separator = ""},
 						"diff",
 					},
 				},
@@ -76,7 +74,7 @@ return {
 						{ "filename", path = 1, symbols = confui.file_status_symbol },
 					},
 				},
-				extensions = { "aerial", "nvim-tree", "quickfix", "toggleterm" },
+				extensions = { "aerial", "nvim-tree", "quickfix" },
 			})
 		end,
 	},

@@ -1,7 +1,7 @@
 local M = {}
 
 local autocmd = vim.api.nvim_create_autocmd
-local my_augroup = require("config.microchad.builtin_extend").my_augroup
+local my_augroup = vim.api.nvim_create_augroup('MyAugroup', {})
 
 local git_workspace_diff_setup = function()
 	local function is_a_git_dir()
@@ -158,23 +158,10 @@ end
 
 M.git_workspace_diff = {}
 
-M.reopen_qflist_by_trouble = function()
-	local windows = vim.api.nvim_list_wins()
-
-	for _, winid in ipairs(windows) do
-		local bufid = vim.api.nvim_win_get_buf(winid)
-		local buf_filetype = vim.api.nvim_buf_get_option(bufid, "filetype")
-		if buf_filetype == "qf" then
-			vim.api.nvim_win_close(winid, true)
-		end
-	end
-	require("trouble").toggle("quickfix")
-end
-
 git_workspace_diff_setup()
 
 -- Define spinner frames and state
-local spinner_frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+local spinner_frames = { "⠋", "⠙", "⠸", "⠴", "⠦", "⠇" }
 local spinner_index = 1
 local spinner_active = false
 
@@ -197,6 +184,7 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "CodeCompanionRequestStarted",
   callback = function()
     if spinner_active then return end  -- already running
+    if not spinner_timer then return end  -- timer not initialized
     spinner_active = true
     spinner_index = 1
     spinner_timer:start(0, 100, vim.schedule_wrap(function()
@@ -211,6 +199,7 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "CodeCompanionRequestFinished",
   callback = function()
     if not spinner_active then return end
+    if not spinner_timer then return end  -- timer not initialized
     spinner_active = false
     spinner_timer:stop()
     spinner_index = 1
@@ -219,3 +208,5 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 return M
+
+
