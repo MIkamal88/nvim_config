@@ -92,6 +92,7 @@ return {
         "postgresql~16",
         "tailwindcss",
         "react",
+				"angular",
         "typescript",
         "markdown",
 			},

@@ -5,4 +5,5 @@ return {
 	{ import = "plugins.langs.sql" },
 	{ import = "plugins.langs.tailwind" },
 	{ import = "plugins.langs.typescript" },
+	{ import = "plugins.langs.json" },
 }
