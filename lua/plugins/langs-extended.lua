@@ -6,4 +6,7 @@ return {
 	{ import = "plugins.langs.tailwind" },
 	{ import = "plugins.langs.typescript" },
 	{ import = "plugins.langs.json" },
+	{ import = "plugins.langs.htmx" },
+	{ import = "plugins.langs.jinja" },
+	{ import = "plugins.langs.php" },
 }

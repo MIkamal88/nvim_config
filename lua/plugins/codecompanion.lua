@@ -52,18 +52,18 @@ return {
 					})
 				end,
 			},
-			llama_cpp = function()
-				return require("codecompanion.adapters").extend("openai_compatible", {
-					name = "llama_cpp",
-					formatted_name = "LlamaCPP",
-					schema = { model = { cache_prompt = { default = true, mapping = "parameters" } } },
-					env = {
-						url = "http://localhost:11434",
-						api_key = "TERM",
-						chat_url = "/v1/chat/completions",
-					},
-				})
-			end,
+			-- llama_cpp = function()
+			-- 	return require("codecompanion.adapters").extend("openai_compatible", {
+			-- 		name = "llama_cpp",
+			-- 		formatted_name = "LlamaCPP",
+			-- 		schema = { model = { cache_prompt = { default = true, mapping = "parameters" } } },
+			-- 		env = {
+			-- 			url = "http://localhost:11434",
+			-- 			api_key = "TERM",
+			-- 			chat_url = "/v1/chat/completions",
+			-- 		},
+			-- 	})
+			-- end,
 		},
 
 		strategies = {
@@ -94,7 +94,7 @@ return {
 				opts = {
 					keymap = "gh",
 					title_generation_opts = {
-						adapter = "llama_cpp",
+						-- adapter = "llama_cpp",
 						refresh_every_n_prompts = 3,
 					},
 					save_chat_keymap = "sc",

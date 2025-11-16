@@ -30,7 +30,7 @@ return {
             fontFaceProperties = "warning",
             hexColorLength = "warning",
             argumentsInColorFunction = "warning",
-            unknownAtRules = "ignore",
+            unknownAtRules = "warning",
             ieHack = "warning",
             propertyIgnoredDueToDisplay = "warning",
           },

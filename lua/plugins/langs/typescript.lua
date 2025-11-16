@@ -4,12 +4,6 @@ return {
     opts = {
       servers = {
         vtsls = {
-          handlers = {
-            ["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
-              require("ts-error-translator").translate_diagnostics(err, result, ctx, config)
-              vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
-            end,
-          },
           init_options = {
             preferences = {
               disableSuggestions = true,
@@ -65,7 +59,6 @@ return {
   },
 	{
 		"dmmulroy/ts-error-translator.nvim",
-		event = "LspAttach",
 		config = true,
 	},
   -- {
