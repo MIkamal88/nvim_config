@@ -36,6 +36,27 @@ return {
 	},
 	{ "stevearc/conform.nvim", event = "BufWritePre" },
 	{
+		"esmuellert/vscode-diff.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		config = function()
+			require("vscode-diff").setup({
+				keymaps = {
+					view = {
+						next_hunk = "]c", -- Jump to next change
+						prev_hunk = "[c", -- Jump to previous change
+						next_file = "]f", -- Next file in explorer mode
+						prev_file = "[f", -- Previous file in explorer mode
+					},
+					explorer = {
+						select = "<CR>", -- Open diff for selected file
+						hover = "K", -- Show file diff preview
+						refresh = "R", -- Refresh git status
+					},
+				},
+			})
+		end,
+	},
+	{
 		"maskudo/devdocs.nvim",
 		lazy = false,
 		dependencies = {
@@ -83,17 +104,17 @@ return {
 		opts = {
 			ensure_installed = {
 				"lua~5.1",
-        "html",
+				"html",
 				"http",
-        "css",
-        "sass",
-        "python~3.11",
-        "sqlite",
-        "postgresql~16",
-        "tailwindcss",
-        "react",
-        "typescript",
-        "markdown",
+				"css",
+				"sass",
+				"python~3.11",
+				"sqlite",
+				"postgresql~16",
+				"tailwindcss",
+				"react",
+				"typescript",
+				"markdown",
 			},
 		},
 	},

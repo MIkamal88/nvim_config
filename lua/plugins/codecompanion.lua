@@ -47,7 +47,17 @@ return {
 				claude_code = function()
 					return require("codecompanion.adapters").extend("claude_code", {
 						env = {
-							CLAUDE_CODE_OAUTH_TOKEN = os.getenv("CLAUDE_API")
+							CLAUDE_CODE_OAUTH_TOKEN = os.getenv("CLAUDE_API"),
+						},
+					})
+				end,
+				gemini_cli = function()
+					return require("codecompanion.adapters").extend("gemini_cli", {
+						defaults = {
+							auth_method = "gemini-api-key",
+						},
+						env = {
+							GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 						},
 					})
 				end,
@@ -93,10 +103,10 @@ return {
 				enabled = true,
 				opts = {
 					keymap = "gh",
-					title_generation_opts = {
-						adapter = "llama_cpp",
-						refresh_every_n_prompts = 3,
-					},
+					-- title_generation_opts = {
+					-- 	adapter = "llama_cpp",
+					-- 	refresh_every_n_prompts = 3,
+					-- },
 					save_chat_keymap = "sc",
 					auto_save = true,
 					expiration_days = 0,
