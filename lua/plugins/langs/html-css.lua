@@ -22,9 +22,7 @@ return {
             compatibleVendorPrefixes = "ignore",
             vendorPrefix = "ignore",
             unknownVendorSpecificProperties = "ignore",
-
             -- unknownProperties = "ignore", -- duplicate with stylelint
-
             duplicateProperties = "warning",
             emptyRules = "warning",
             importStatement = "warning",
@@ -32,7 +30,7 @@ return {
             fontFaceProperties = "warning",
             hexColorLength = "warning",
             argumentsInColorFunction = "warning",
-            unknownAtRules = "warning",
+            unknownAtRules = "ignore",
             ieHack = "warning",
             propertyIgnoredDueToDisplay = "warning",
           },

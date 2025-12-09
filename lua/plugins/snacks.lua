@@ -48,8 +48,6 @@ return {
 			zen = { enabled = false },
 			picker = {
 				enabled = true,
-				ui_select = true,
-				live = true,
 				layout = {
 					select = {
 						layout = "ivy",

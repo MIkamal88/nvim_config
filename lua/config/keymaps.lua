@@ -32,7 +32,8 @@ keymap({ "n", "t" }, "<c-`>", function()
 end, { desc = "Terminal (Root Dir)" })
 
 keymap({ "n", "v" }, "<leader>ac", "<Cmd>CodeCompanionChat Toggle<CR>", opts)
+keymap({ "n", "v" }, "<leader>am", "<Cmd>MCPHub<CR>", opts)
+keymap("n", "<leader>at", "<Cmd>LlamaToggle<CR>", { desc = "Toggle AI completion" })
 
 keymap({ "n", "v" }, "<leader>gD", "<Cmd>CodeDiff<CR>", opts)
 
-keymap("n", "<leader>at", "<Cmd>LlamaToggle<CR>", { desc = "Toggle AI completion" })

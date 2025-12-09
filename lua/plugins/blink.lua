@@ -219,12 +219,6 @@ return {
 						codecompanion = {
 							name = "codecompanion",
 							module = "codecompanion.providers.completion.blink",
-							transform_items = function(_, items)
-								for _, item in ipairs(items) do
-									item.kind_icon = " "
-								end
-								return items
-							end,
 							score_offset = function()
 								return 100
 							end,

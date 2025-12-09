@@ -32,6 +32,33 @@ opt.cmdheight = 1
 -- Disable autoformat
 vim.g.autoformat = false
 
+-- Clipboard configuration for SSH
+-- Use unnamedplus to sync with system clipboard
+opt.clipboard = "unnamedplus"
+
+-- OSC 52 clipboard support for SSH sessions
+-- This allows copying to local clipboard when connected via SSH
+if os.getenv("SSH_CONNECTION") then
+	local function paste()
+		return {
+			vim.fn.split(vim.fn.getreg(""), "\n"),
+			vim.fn.getregtype(""),
+		}
+	end
+
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+			["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+		},
+		paste = {
+			["+"] = paste,
+			["*"] = paste,
+		},
+	}
+end
+
 -- Folding
 -- vim.o.foldenable = true
 -- vim.o.foldlevel = 99

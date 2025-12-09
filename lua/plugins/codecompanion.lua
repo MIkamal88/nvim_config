@@ -25,9 +25,11 @@ end
 
 return {
 	"olimorris/codecompanion.nvim",
+	version = "v17.33.0",
 	config = function(_, opts)
 		require("codecompanion").setup(opts)
 	end,
+	cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"MeanderingProgrammer/render-markdown.nvim",
@@ -57,7 +59,7 @@ return {
 							auth_method = "gemini-api-key",
 						},
 						env = {
-							GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+							GEMINI_API_KEY = os.getenv("GEMINI_API_KEY"),
 						},
 					})
 				end,
@@ -68,7 +70,7 @@ return {
 					formatted_name = "LlamaCPP",
 					schema = { model = { cache_prompt = { default = true, mapping = "parameters" } } },
 					env = {
-						url = "http://localhost:11434",
+						url = "http://100.65.247.58:11434",
 						api_key = "TERM",
 						chat_url = "/v1/chat/completions",
 					},
@@ -77,20 +79,28 @@ return {
 		},
 
 		strategies = {
-			chat = { adapter = "claude_code" },
+			chat = { adapter = "llama_cpp" },
 			inline = { adapter = "claude_code" },
-			cmd = { adapter = "claude_code" },
+			cmd = { adapter = "llama_cpp" },
 		},
 
 		prompt_library = load_prompt_library(),
 
+		display = {
+			chat = {
+				icons = {
+					tool_success = "󰸞 ",
+				},
+				fold_context = true,
+			},
+		},
 		extensions = {
 			mcphub = {
 				callback = "mcphub.extensions.codecompanion",
 				opts = {
 					make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
 					show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
-					add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+					add_mcp_prefix_to_tool_names = false, -- Adds `mcp__` prefix e.g `mcp__github__get_issue`
 					show_result_in_chat = true, -- Show tool results directly in chat buffer
 					format_tool = nil, -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
 					-- MCP Resources
@@ -103,10 +113,10 @@ return {
 				enabled = true,
 				opts = {
 					keymap = "gh",
-					-- title_generation_opts = {
-					-- 	adapter = "llama_cpp",
-					-- 	refresh_every_n_prompts = 3,
-					-- },
+					title_generation_opts = {
+						adapter = "llama_cpp",
+						refresh_every_n_prompts = 3,
+					},
 					save_chat_keymap = "sc",
 					auto_save = true,
 					expiration_days = 0,
