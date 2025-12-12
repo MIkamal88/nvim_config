@@ -1,7 +1,7 @@
 local M = {}
 
 local autocmd = vim.api.nvim_create_autocmd
-local my_augroup = vim.api.nvim_create_augroup('MyAugroup', {})
+local my_augroup = vim.api.nvim_create_augroup("MyAugroup", {})
 
 local git_workspace_diff_setup = function()
 	local function is_a_git_dir()
@@ -161,7 +161,18 @@ M.git_workspace_diff = {}
 git_workspace_diff_setup()
 
 -- Define spinner frames and state
-local spinner_frames = { "⠋", "⠙", "⠸", "⠴", "⠦", "⠇" }
+local spinner_frames = {
+	"⠋",
+	"⠙",
+	"⠹",
+	"⠸",
+	"⠼",
+	"⠴",
+	"⠦",
+	"⠧",
+	"⠇",
+	"⠏",
+}
 local spinner_index = 1
 local spinner_active = false
 
@@ -171,42 +182,53 @@ local spinner_timer = uv.new_timer()
 
 -- Lualine Spinner component
 M.codecompanion_spinner = function()
-  if spinner_active then
-    return spinner_frames[spinner_index] .. " 󰚩 "
-  else
-    return " 󰡖 "
-  end
+	if spinner_active then
+		return spinner_frames[spinner_index] .. " 󰚩 "
+	else
+		return " 󰡖 "
+	end
 end
 
 -- Register autocommands for CodeCompanion
 vim.api.nvim_create_autocmd("User", {
-  desc = "CodeCompanion spinner start",
-  pattern = "CodeCompanionRequestStarted",
-  callback = function()
-    if spinner_active then return end  -- already running
-    if not spinner_timer then return end  -- timer not initialized
-    spinner_active = true
-    spinner_index = 1
-    spinner_timer:start(0, 100, vim.schedule_wrap(function()
-      spinner_index = (spinner_index % #spinner_frames) + 1
-      vim.cmd("redrawstatus") -- refresh lualine
-    end))
-  end,
+	desc = "CodeCompanion spinner start",
+	pattern = "CodeCompanionRequestStarted",
+	callback = function()
+		if spinner_active then
+			return
+		end -- already running
+		if not spinner_timer then
+			return
+		end -- timer not initialized
+		spinner_active = true
+		spinner_index = 1
+		spinner_timer:start(
+			0,
+			100,
+			vim.schedule_wrap(function()
+				spinner_index = (spinner_index % #spinner_frames) + 1
+				-- Force a full redraw to update lualine
+				vim.cmd("redrawstatus!")
+			end)
+		)
+	end,
 })
 
 vim.api.nvim_create_autocmd("User", {
-  desc = "CodeCompanion spinner stop",
-  pattern = "CodeCompanionRequestFinished",
-  callback = function()
-    if not spinner_active then return end
-    if not spinner_timer then return end  -- timer not initialized
-    spinner_active = false
-    spinner_timer:stop()
-    spinner_index = 1
-    vim.cmd("redrawstatus")
-  end,
+	desc = "CodeCompanion spinner stop",
+	pattern = "CodeCompanionRequestFinished",
+	callback = function()
+		if not spinner_active then
+			return
+		end
+		if not spinner_timer then
+			return
+		end -- timer not initialized
+		spinner_active = false
+		spinner_timer:stop()
+		spinner_index = 1
+		vim.cmd("redrawstatus!")
+	end,
 })
 
 return M
-
-
