@@ -326,8 +326,4 @@ return {
 			end, "Go to previous snippet", { silent = true })
 		end,
 	},
-	{
-		"folke/lazydev.nvim",
-		ft = "lua",
-	},
 }

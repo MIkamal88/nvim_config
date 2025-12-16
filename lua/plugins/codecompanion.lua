@@ -33,7 +33,7 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"MeanderingProgrammer/render-markdown.nvim",
-		"ravitemer/codecompanion-history.nvim",
+		{ "ravitemer/codecompanion-history.nvim", commit = "eb99d25" },
 		"ravitemer/mcphub.nvim",
 	},
 
@@ -64,6 +64,18 @@ return {
 					})
 				end,
 			},
+			llama_weak = function()
+				return require("codecompanion.adapters").extend("openai_compatible", {
+					name = "llama_weak",
+					formatted_name = "LlamaCPP",
+					schema = { model = { cache_prompt = { default = true, mapping = "parameters" } } },
+					env = {
+						url = "http://localhost:11434",
+						api_key = "TERM",
+						chat_url = "/v1/chat/completions",
+					},
+				})
+			end,
 			llama_cpp = function()
 				return require("codecompanion.adapters").extend("openai_compatible", {
 					name = "llama_cpp",
@@ -79,9 +91,9 @@ return {
 		},
 
 		strategies = {
-			chat = { adapter = "llama_cpp" },
+			chat = { adapter = "claude_code" },
 			inline = { adapter = "claude_code" },
-			cmd = { adapter = "llama_cpp" },
+			cmd = { adapter = "llama_weak" },
 		},
 
 		prompt_library = load_prompt_library(),
@@ -114,7 +126,7 @@ return {
 				opts = {
 					keymap = "gh",
 					title_generation_opts = {
-						adapter = "llama_cpp",
+						adapter = "llama_weak",
 						refresh_every_n_prompts = 3,
 					},
 					save_chat_keymap = "sc",

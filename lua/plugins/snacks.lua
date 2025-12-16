@@ -90,6 +90,7 @@ return {
 				scope = { enabled = true, char = "┋" },
 			},
 			input = { enabled = true },
+			notifier = { enabled = true, border = "single" },
 		},
 	},
 }

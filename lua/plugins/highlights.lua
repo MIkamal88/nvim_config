@@ -1,6 +1,7 @@
 return {
 	{
 		"brenoprata10/nvim-highlight-colors",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("nvim-highlight-colors").setup({
 				render = "virtual",
@@ -15,7 +16,7 @@ return {
 				enable_hsl_without_function = true,
 				enable_var_usage = true,
 				enable_named_colors = true,
-				enable_tailwind = true,
+				enable_tailwind = false, -- handled by tailwind-tools.nvim
 				custom_colors = {
 					{ label = "%-%-theme%-primary%-color", color = "#0f1219" },
 					{ label = "%-%-theme%-secondary%-color", color = "#5a5d64" },
@@ -48,7 +49,6 @@ return {
 				hl(0, "CursorLine", { fg = "NONE", bg = c.one_bg2 })
 				hl(0, "GitSignsCurrentLineBlame", { fg = "#3e445e" })
 				hl(0, "String", { fg = "#82c29c", bg = "NONE" })
-				hl(0, "IblScope", { fg = c.base0E, bg = "NONE" })
 				hl(0, "guibg", { fg = "NONE", bg = "NONE" })
 				hl(0, "Normal", { fg = "NONE", bg = "NONE" })
 				hl(0, "NormalFloat", { fg = "NONE", bg = "NONE" })

@@ -18,19 +18,64 @@ return {
 	-- 	},
 	-- },
 	-- { "AndreM222/copilot-lualine" },
+	-- {
+	-- 	"ggml-org/llama.vim",
+	-- 	init = function()
+	-- 		vim.g.llama_config = {
+	-- 			endpoint = "http://100.65.247.58:11434/infill",
+	-- 			show_info = false,
+	-- 			n_prefix = 256,
+	-- 			n_suffix = 256,
+	-- 			n_prefict = 30,
+	-- 			keymap_accept_full = "<C-c>",
+	-- 			keymap_accept_line = "<C-l>",
+	-- 			enable_at_startup = true,
+	-- 		}
+	-- 	end,
+	-- },
+
 	{
-		"ggml-org/llama.vim",
-		init = function()
-			vim.g.llama_config = {
-				endpoint = "http://100.65.247.58:11434/infill",
-				show_info = false,
-				n_prefix = 256,
-				n_suffix = 256,
-				n_prefict = 30,
-				keymap_accept_full = "<C-c>",
-				keymap_accept_line = "<C-l>",
-				enable_at_startup = true,
-			}
+		"milanglacier/minuet-ai.nvim",
+		config = function()
+			require("minuet").setup({
+				provider = "openai_fim_compatible",
+				n_completions = 1,
+				context_window = 8192,
+				provider_options = {
+					openai_fim_compatible = {
+						api_key = "TERM",
+						name = "Llama.cpp",
+						end_point = "http://100.65.247.58:11434/v1/completions",
+						model = "Qwen3:Coder",
+						optional = {
+							max_tokens = 56,
+							top_p = 0.9,
+						},
+						-- llama.cpp doesn't support suffix option in FIM completion
+						-- so we embed FIM tokens directly in the prompt
+						template = {
+							prompt = function(context_before_cursor, context_after_cursor, _)
+								return "<|fim_prefix|>"
+									.. context_before_cursor
+									.. "<|fim_suffix|>"
+									.. context_after_cursor
+									.. "<|fim_middle|>"
+							end,
+							suffix = false,
+						},
+					},
+				},
+				virtualtext = {
+					auto_trigger_ft = { }, -- auto-trigger for all filetypes
+					keymap = {
+						accept = "<C-c>",
+						accept_line = "<C-l>",
+						prev = "<A-[>",
+						next = "<A-]>",
+						dismiss = "<C-e>",
+					},
+				},
+			})
 		end,
 	},
 	{
@@ -38,6 +83,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
+		commit = "8ff40b5",
 		build = "npm install -g mcp-hub@latest",
 		config = function()
 			require("mcphub").setup({
